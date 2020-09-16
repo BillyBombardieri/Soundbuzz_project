@@ -24,7 +24,7 @@
                     <div class="card">
                         <a href="add_music.php"><img src="img/votremusiquebmanc.png" alt="Avatar" style="width:100%"></a>
                         <div class="container">
-                            <h4 class="soustitre"><b>Ecoutez les dernières sorties</b></h4> 
+                            <h4 class="soustitre"><b>Ecoutez vos musiques</b></h4> 
                         </div>
                     </div>
                 </div>
