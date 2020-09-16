@@ -21,13 +21,13 @@
             $valid='';
             $error='';
             $date_transfert=date("Y-m-d");
-            if(!empty($_POST['titre_morceau']) AND !empty($_POST['genre']) AND !empty($_POST['description_music']) AND !empty($_POST['artiste']) AND !empty($_POST['compositeur']) 
+            if(!empty($_FILES['titre_morceau']['name']) AND !empty($_POST['genre']) AND !empty($_POST['description_music']) AND !empty($_POST['artiste']) AND !empty($_POST['compositeur']) 
             AND !empty($_POST['contenu']) AND !empty($date_transfert) AND !empty($_POST['date_creation']) AND !empty($_POST['duree_morceau']) AND !empty($_FILES['logo']['name']) ){
-
+                $titre=$_FILES['titre_morceau']['name'];
                 $photo=$_FILES['logo']['name'];
                 $add = $soundbuzz->prepare(" INSERT INTO music (titre_morceau, genre, description_music, photo, artiste, compositeur, contenu, date_transfert, 
                 date_creation, duree_morceau, fk2_id_user) VALUES (:titre_morceau, :genre, :description_music, :photo, :artiste, :compositeur, :contenu, :date_transfert, :date_creation, :duree_morceau, :fk2_id_user) ");
-                $add->bindParam(':titre_morceau', $_POST['titre_morceau']);
+                $add->bindParam(':titre_morceau', $titre);
                 $add->bindParam(':genre', $_POST['genre']);
                 $add->bindParam(':description_music', $_POST['description_music']);
                 $add->bindParam(':photo', $photo);
@@ -58,9 +58,9 @@
         <form method="post" class="form-style-7" action=""  enctype="multipart/form-data">
             <ul>
                 <li>
-                    <label for="nom">Titre du Morceau</label>
-                    <input type="text" name="titre_morceau"><br><br>
-                    <span> Entrez le nom du morceau </span>
+                    <label for="url">Télécharger le fichier Audio</label>
+                    <input type="file" id="logo" name="titre_morceau" accept=".mp3, .flac, .wav, .ogg" maxlength="100">
+                    <span>Téléchargez le au format mp3, flac, wav, ogg</span>
                 </li>
                 <li>
                     <label for="prenom">Genre</label>
@@ -127,11 +127,6 @@
                 }
                 if(!isset($erreur)) //S'il n'y a pas d'erreur, on upload
                 {
-                    //On formate le nom du fichier ici...
-                    $fichier = strtr($fichier, 
-                        'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 
-                        'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
-                    $fichier = preg_replace('/([^.a-z0-9]+)/i', '-', $fichier);
                     if(move_uploaded_file($_FILES['logo']['tmp_name'], $dossier . $fichier)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
                     {
                     }
@@ -139,6 +134,18 @@
                     {
                         $erreur_upload = 'Echec de l\'upload !';
                     }
+                }
+            }
+            //Verifie l'extension et la taille du MP3
+            if(isset($_FILES['titre_morceau']['name'])) {
+                var_dump($_FILES['titre_morceau']['name']);
+                $fichier = basename($_FILES['titre_morceau']['name']);
+                if(move_uploaded_file($_FILES['titre_morceau']['tmp_name'], $dossier.$_FILES['titre_morceau']['name'])) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
+                {
+                }
+                else //Sinon (la fonction renvoie FALSE).
+                {
+                    $erreur_upload = 'Echec de l\'upload !';
                 }
             }
         ?>

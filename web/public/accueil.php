@@ -30,7 +30,7 @@
                 </div>
                 <div class="lien">
                 <div class="card">
-                    <a href="random.php"><img src="img/newartist.png" alt="Avatar" style="width:100%"></a>
+                    <a href="new_music.php"><img src="img/newartist.png" alt="Avatar" style="width:100%"></a>
                     <div class="container">
                         <h4 class="soustitre"><b>Ecoutez de nouvelles musiques</b></h4>  
                     </div>

@@ -50,7 +50,7 @@
                     <?php if(!empty($music["id_music"])): ?>
                         <tr>
                             <td><?= $music["titre_morceau"] ?></td>
-                            <td><?= $music["genre"] ?></td>
+                            <td><?= $music["artiste"] ?></td>
                             <td><?= $music["duree_morceau"] ?></td>
                             <td><?= $music['photo'] ?></td>
                             <td>
